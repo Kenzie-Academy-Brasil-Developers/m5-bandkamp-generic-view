@@ -4,20 +4,14 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer
 from django.shortcuts import get_object_or_404
 from .permissions import IsAccountOwner
+from utils.base_views import CreateBaseView
+from utils.generic_views import CreateGenericView
 
 
-class UserView(APIView):
-    def post(self, request: Request) -> Response:
-        """
-        Registro de usuários
-        """
-        serializer = UserSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        serializer.save()
-
-        return Response(serializer.data, status.HTTP_201_CREATED)
-
+class UserView(CreateGenericView):
+    view_queryset = User.objects.all()
+    view_serializer = UserSerializer
+    
 
 class UserDetailView(APIView):
     authentication_classes = [JWTAuthentication]
