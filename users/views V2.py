@@ -53,6 +53,3 @@ class UserDetailView(APIView):
         user.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# "MUDANÇAS PARA UPAR COMMIT DA TAREFA 3, FEITO COMO TAREFA 2 POR ENGANO"
