@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
         read_only_fields = ["id", "is_superuser"]
+
         extra_kwargs = {
             "username": {
                 "validators": [
