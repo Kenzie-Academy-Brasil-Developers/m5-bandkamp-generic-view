@@ -9,7 +9,5 @@ class SongSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "duration", "album_id"]
         extra_kwargs = {"album_id": {"read_only": True}}
 
-    # def create(self, validated_data):
-    #     return Song.objects.create(**validated_data)
 
 
