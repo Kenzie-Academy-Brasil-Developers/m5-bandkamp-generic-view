@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+from django.core.management.utils import get_random_secret_key
 import os
+import dj_database_url
 import dotenv
+
 
 dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,13 +28,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
+RAILWAY_STATIC_URL = os.getenv("RAILWAY_STATIC_URL")
+
+if RAILWAY_STATIC_URL:
+    ALLOWED_HOSTS += [RAILWAY_STATIC_URL, "0.0.0.0"]
 
 # Application definition
 DJANGO_APPS = [
@@ -43,9 +50,7 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = [
-    "rest_framework",
-]
+THIRD_PARTY_APPS = ["rest_framework", "drf_spectacular"]
 
 MY_APPS = [
     "users",
@@ -63,6 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "bandkamp.urls"
@@ -99,6 +105,19 @@ DATABASES = {
         "PORT": os.getenv("POSTGRES_DB_PORT"),
     }
 }
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    db_from_env: dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True
+    )
+    DATABASES["default".update(db_from_env)]
+    DEBUG = False
+
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+    STATIC_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
 #         "NAME": BASE_DIR / "db.sqlite3",
@@ -130,6 +149,13 @@ SIMPLE_JWT = {
 REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 2,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Entrega Sprint 5",
+    "DESCRIPTION": "Projeto BandKamp Sprint 5",
+    "VERSION": "0.0.1",
 }
 
 # Internationalization
