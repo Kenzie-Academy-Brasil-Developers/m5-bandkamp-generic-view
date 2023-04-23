@@ -19,7 +19,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name', 'is_superuser']
+        fields = [
+            "id",
+            "username",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "is_superuser",
+        ]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = User.objects.create_superuser(**validated_data)
@@ -27,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for key, value in validated_data.items():
-            if key == 'password':
+            if key == "password":
                 instance.set_password(value)
             else:
                 setattr(instance, key, value)
