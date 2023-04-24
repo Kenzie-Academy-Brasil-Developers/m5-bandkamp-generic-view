@@ -2,8 +2,11 @@ asgiref==3.5.2
 asttokens==2.2.1
 attrs==22.1.0
 backcall==0.2.0
+colorama==0.4.6
 decorator==5.1.1
 Django==4.0.7
+djangorestframework==3.14.0
+djangorestframework-simplejwt==5.2.2
 executing==1.2.0
 iniconfig==1.1.1
 ipdb==0.13.9
@@ -18,6 +21,7 @@ pluggy==1.0.0
 prompt-toolkit==3.0.36
 ptyprocess==0.7.0
 pure-eval==0.2.2
+pycodestyle==2.10.0
 Pygments==2.13.0
 PyJWT==2.6.0
 pytest==7.2.0
@@ -29,4 +33,5 @@ sqlparse==0.4.3
 stack-data==0.6.2
 toml==0.10.2
 traitlets==5.7.0
+tzdata==2023.3
 wcwidth==0.2.5
