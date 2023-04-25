@@ -24,7 +24,7 @@
       },
       {
         "src": "/(.*)",
-        "dest": "nome_do_projeto/wsgi.py"
+        "dest": "bandkamp/wsgi.py"
       }
     ]
    }
