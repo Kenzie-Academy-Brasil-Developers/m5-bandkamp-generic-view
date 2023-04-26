@@ -33,6 +33,5 @@ urlpatterns = [
     path(
         "api/docs/redoc/",
         SpectacularRedocView.as_view(url_name="docs"),
-    )
-    # path("api/", include("songs.urls")),
+    ),
 ]
