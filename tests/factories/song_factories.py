@@ -10,7 +10,6 @@ def create_song_with_album(
     song_data: dict = None,
     album: Album = None,
 ) -> Song:
-
     if not album:
         album = create_album_with_user(user)
 
@@ -30,7 +29,6 @@ def create_multiple_songs_with_album(
     songs_count: int,
     album: Album = None,
 ) -> QuerySet[Album]:
-
     if not album:
         album = create_album_with_user(user=user)
 
