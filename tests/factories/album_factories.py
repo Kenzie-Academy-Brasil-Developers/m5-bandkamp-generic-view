@@ -8,7 +8,6 @@ def create_album_with_user(
     user: AbstractUser,
     album_data: dict = None,
 ) -> Album:
-
     if not album_data:
         album_data = {
             "name": "Shadows Collide with People",
